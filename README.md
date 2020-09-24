@@ -1,6 +1,18 @@
 Haplotype Comparison Tools
 ==========================
 
+------
+
+# ADDED 
+
+Docker image for 0.3.12
+
+Multiprocessing module for som.py
+
+[Check](#multi)
+
+------
+
 Peter Krusche <pkrusche@illumina.com>
 
 This is a set of programs based on [htslib](https://github.com/samtools/htslib)
@@ -33,6 +45,7 @@ More information can be found below in the [usage section](#usage).
 * [Usage](#usage)
   * [hap.py](#happy)
   * [som.py](#sompy)
+  * [Multiprocessing som.py](#multi)
 * [Installation](#installation)
   * [Helper script](#helper-script)
   * [Docker](#docker)
@@ -266,6 +279,46 @@ test.stats.csv
 The most relevant metrics are recall and precision. UNK calls are the calls that are outside the
 coverage of the truthset.
 
+### <a name="multi">Multiprocessing som.py</a>
+
+For the installation [GO TO](#hap0.3.12)
+
+<code>first input</code> : Truth VCF file
+
+<code>second input</code> : prefix of query VCF files.
+  >eg. 
+  >```console
+  >$ ls /path/to/query/
+  >prefix_0.12.vcf
+  >prefix_0.24.vcf
+  >prefix_0.36.vcf
+  >prefix_0.48.vcf
+  >```
+  >then type '/path/to/query/prefix' to use the vcf files
+
+<code>-f or --false-positives</code> : False-positive region bed file to distinguish UNK from FP.
+
+<code>-o or --output</code> : Path where output files for statistics and feature table will be located.
+
+<code>-r or --reference</code> : Specify a reference file.
+
+<code>--thread</code> : Number of threads
+
+<code>--force</code> : If on, don't follow the recommended number of threads
+
+#### Example
+```console
+$ docker run -it --rm -v /your/directory/input/path/:/input -v /your/directory/output/path/:/output paramost/hap.py:multi /opt/hap.py/bin/multi_som.py \
+  /input/truth.vcf \
+  /input/prefix \
+  -f /input/truth.bed \
+  -r /input/reference.fa \
+  -o /output/path/
+  --thread 12
+  --force
+```
+
+
 ## Installation
 
 ### Helper script
@@ -319,6 +372,26 @@ There are various workaround / testing switches:
 
 ### Docker
 
+
+<a name="hap0.3.12">Version 0.3.12</a>
+
+You can just use pre-built image from [https://hub.docker.com/r/paramost/hap.py](https://hub.docker.com/r/paramost/hap.py). 
+
+Normal version
+```console
+$ docker build -t <any name you want> -f Dockerfile.0.3.12 .
+ Or 
+$ docker pull paramost/hap.py
+```
+
+To use multiprocessing som.py
+```console
+$ docker build -t <any name you want> -f Dockerfile.multi .
+ Or
+$ docker pull paramost/hap.py:multi
+```
+
+#### Old version
 Clone this repository and build a Docker image as follows.
 ```
 $ sudo docker build .
