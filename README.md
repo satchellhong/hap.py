@@ -281,6 +281,7 @@ coverage of the truthset.
 
 ### <a name="multi">Multiprocessing som.py</a>
 
+#### Parameters
 For the installation [GO TO](#hap0.3.12)
 
 <code>first input</code> : Truth VCF file
