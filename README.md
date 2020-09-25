@@ -328,9 +328,13 @@ $ docker run -it --rm -v /your/directory/input/path/:/input -v /your/directory/o
 #### Parameters
 
 `--dir` string : each directory creates one plot. seperated by ','
+
 `--prefix` string : each prefix draws a line in the plot. seperated by ','
+
 `--grp` string : title for each plot. seperated by ','
+
 `--out` string : output path and name for the figure
+
 `--col` int : number of columns to put in the figure
 
 #### Example
