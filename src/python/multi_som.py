@@ -41,18 +41,23 @@ def MultSompy(truth, query, FP, output, ref, thread=cpu_count()):
 		thread=len(vcf_list)
 		for vcf in vcf_list:
 			out_prefix = output+'/'+vcf.split('/')[-1]
-			cmd = "/opt/hap.py/bin/som.py "+truth+' '+vcf+' -f '+FP+' -r '+ref+' -o '+out_prefix
+			if(ref==None):
+				cmd = "/opt/hap.py/bin/som.py "+truth+' '+vcf+' -f '+FP+' -o '+out_prefix
+			else:
+				cmd = "/opt/hap.py/bin/som.py "+truth+' '+vcf+' -f '+FP+' -r '+ref+' -o '+out_prefix
 			t_vcf_list.append([[cmd,vcf.split('/')[-1]]])
 			
 	else:
 		for i,vcf in enumerate(vcf_list):
-			if i<thread:
-				out_prefix = output+'/'+vcf.split('/')[-1]
+			out_prefix = output+'/'+vcf.split('/')[-1]
+			if(ref==None):
+				cmd = "/opt/hap.py/bin/som.py "+truth+' '+vcf+' -f '+FP+' -o '+out_prefix
+			else:
 				cmd = "/opt/hap.py/bin/som.py "+truth+' '+vcf+' -f '+FP+' -r '+ref+' -o '+out_prefix
+				
+			if i<thread:
 				t_vcf_list.append([[cmd,vcf.split('/')[-1]]])
 			else:
-				out_prefix = output+'/'+vcf.split('/')[-1]
-				cmd = "/opt/hap.py/bin/som.py "+truth+' '+vcf+' -f '+FP+' -r '+ref+' -o '+out_prefix
 				t_vcf_list[i%thread].append([cmd,vcf.split('/')[-1]])
 		
 	pool = Pool(processes=thread, initargs=(RLock(),), initializer=tqdm.set_lock)
@@ -71,13 +76,13 @@ if __name__ == "__main__":
 	
 	parser = argparse.ArgumentParser("Somatic Comparison")
 	
-	parser.add_argument("truth", help="Truth VCF file")
-	parser.add_argument("query", help="Query VCF file")
-	parser.add_argument("-f", "--false-positives", dest="FP",
+	parser.add_argument("truth", help="Truth VCF file", required=True)
+	parser.add_argument("query", help="Query VCF file", required=True)
+	parser.add_argument("-f", "--false-positives", dest="FP", required=True,
                         help="False-positive region bed file to distinguish UNK from FP")
 	parser.add_argument("-o", "--output", dest="output", required=True,
                         help="Output file prefix for statistics and feature table (when selected)")
-	parser.add_argument("-r", "--reference", dest="ref",
+	parser.add_argument("-r", "--reference", dest="ref", default=None, required=False,
                         help="Specify a reference file.")
 	parser.add_argument("--thread", dest="thread",type=int,default=cpu_count(), required=False)
 	parser.add_argument("--force", dest="force",action='store_true', default=False)

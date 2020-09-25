@@ -36,4 +36,5 @@ RUN bin/test_haplotypes
 # remove source folder
 WORKDIR /
 RUN cp /opt/hap.py-source/src/python/multi_som.py /opt/hap.py/bin/
+RUN cp /opt/hap.py-source/src/python/draw_roc.py /opt/hap.py/bin/
 RUN rm -rf /opt/hap.py-source

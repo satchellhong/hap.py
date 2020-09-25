@@ -9,6 +9,8 @@ Docker image for 0.3.12
 
 Multiprocessing module for som.py
 
+ROC curve fig
+
 [Check](#multi)
 
 ------
@@ -46,6 +48,7 @@ More information can be found below in the [usage section](#usage).
   * [hap.py](#happy)
   * [som.py](#sompy)
   * [Multiprocessing som.py](#multi)
+  * [ROC Curve](#roc)
 * [Installation](#installation)
   * [Helper script](#helper-script)
   * [Docker](#docker)
@@ -281,12 +284,13 @@ coverage of the truthset.
 
 ### <a name="multi">Multiprocessing som.py</a>
 
-#### Parameters
 For the installation [GO TO](#hap0.3.12)
 
-<code>first input</code> : Truth VCF file
+#### Parameters
 
-<code>second input</code> : prefix of query VCF files.
+`first input` : Truth VCF file
+
+`second input` : prefix of query VCF files.
   >eg. 
   >```console
   >$ ls /path/to/query/
@@ -297,15 +301,15 @@ For the installation [GO TO](#hap0.3.12)
   >```
   >then type '/path/to/query/prefix' to use the vcf files
 
-<code>-f or --false-positives</code> : False-positive region bed file to distinguish UNK from FP.
+`-f or --false-positives` : False-positive region bed file to distinguish UNK from FP.
 
-<code>-o or --output</code> : Path where output files for statistics and feature table will be located.
+`-o or --output` : Path where output files for statistics and feature table will be located.
 
-<code>-r or --reference</code> : Specify a reference file.
+`-r or --reference` not required: Specify a reference file.
 
-<code>--thread</code> : Number of threads
+`--thread` not required : Number of threads
 
-<code>--force</code> : If on, don't follow the recommended number of threads
+`--force` not required : If on, don't follow the recommended number of threads
 
 #### Example
 ```console
@@ -317,6 +321,26 @@ $ docker run -it --rm -v /your/directory/input/path/:/input -v /your/directory/o
   -o /output/path/
   --thread 12
   --force
+```
+
+### <a name="roc">ROC Curve</a>
+
+#### Parameters
+
+`--dir` string : each directory creates one plot. seperated by ','
+`--prefix` string : each prefix draws a line in the plot. seperated by ','
+`--grp` string : title for each plot. seperated by ','
+`--out` string : output path and name for the figure
+`--col` int : number of columns to put in the figure
+
+#### Example
+```console
+$ docker run -it --rm -v /your/directory/input/path/:/input -v /your/directory/output/path/:/output paramost/hap.py:multi /opt/hap.py/bin/draw_roc.py \
+	--dir /input/files1/,/input/files2/,/input/files3/ 
+	--prefix rd,origin 
+	--grp test1,test2,test3
+	--out /output/fig1 
+	--col 2
 ```
 
 
