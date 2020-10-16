@@ -13,8 +13,6 @@ merge vcf
 
 ROC curve fig
 
-[Check](#multi)
-
 ------
 
 Peter Krusche <pkrusche@illumina.com>
@@ -286,43 +284,8 @@ coverage of the truthset.
 
 ### <a name="multi">Multiprocessing som.py</a>
 
-For the installation [GO TO](#hap0.3.12)
-
-#### Parameters
-
-`first input` : Truth VCF file
-
-`second input` : prefix of query VCF files.
-  >eg. 
-  >```console
-  >$ ls /path/to/query/
-  >prefix_0.12.vcf
-  >prefix_0.24.vcf
-  >prefix_0.36.vcf
-  >prefix_0.48.vcf
-  >```
-  >then type '/path/to/query/prefix' to use the vcf files
-
-`-f or --false-positives` : False-positive region bed file to distinguish UNK from FP.
-
-`-o or --output` : Path where output files for statistics and feature table will be located.
-
-`-r or --reference` not required: Specify a reference file.
-
-`--thread` not required : Number of threads
-
-`--force` not required : If on, don't follow the recommended number of threads
-
-#### Example
 ```console
-$ docker run -it --rm -v /your/directory/input/path/:/input -v /your/directory/output/path/:/output paramost/hap.py:multi /opt/hap.py/bin/multi_som.py \
-  /input/truth.vcf \
-  /input/prefix \
-  -f /input/truth.bed \
-  -r /input/reference.fa \
-  -o /output/path/
-  --thread 12
-  --force
+docker run -it --rm -v /your/directory/input/path/:/mnt paramost/hap.py:multi /opt/hap.py/bin/draw_roc.py /mnt/command/set.txt number_of_threads
 ```
 
 ### <a name="roc">ROC Curve</a>
