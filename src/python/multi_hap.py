@@ -43,18 +43,18 @@ def MultSompy(truth, query, FP, output, ref, thread=cpu_count()):
 		for vcf in vcf_list:
 			out_prefix = output+'/'+vcf.split('/')[-1]
 			if(ref==None):
-				cmd = "/opt/hap.py/bin/som.py "+truth+' '+vcf+' -f '+FP+' -o '+out_prefix
+				cmd = "/opt/hap.py/bin/hap.py "+truth+' '+vcf+' -f '+FP+' -o '+out_prefix
 			else:
-				cmd = "/opt/hap.py/bin/som.py "+truth+' '+vcf+' -f '+FP+' -r '+ref+' -o '+out_prefix
+				cmd = "/opt/hap.py/bin/hap.py "+truth+' '+vcf+' -f '+FP+' -r '+ref+' -o '+out_prefix
 			t_vcf_list.append([[cmd,vcf.split('/')[-1]]])
 			
 	else:
 		for i,vcf in enumerate(vcf_list):
 			out_prefix = output+'/'+vcf.split('/')[-1]
 			if(ref==None):
-				cmd = "/opt/hap.py/bin/som.py "+truth+' '+vcf+' -f '+FP+' -o '+out_prefix
+				cmd = "/opt/hap.py/bin/hap.py "+truth+' '+vcf+' -f '+FP+' -o '+out_prefix
 			else:
-				cmd = "/opt/hap.py/bin/som.py "+truth+' '+vcf+' -f '+FP+' -r '+ref+' -o '+out_prefix
+				cmd = "/opt/hap.py/bin/hap.py "+truth+' '+vcf+' -f '+FP+' -r '+ref+' -o '+out_prefix
 				
 			if i<thread:
 				t_vcf_list.append([[cmd,vcf.split('/')[-1]]])

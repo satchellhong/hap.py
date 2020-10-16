@@ -7,7 +7,9 @@ Haplotype Comparison Tools
 
 Docker image for 0.3.12
 
-Multiprocessing module for som.py
+Multiprocessing module script for all modules
+
+merge vcf
 
 ROC curve fig
 
@@ -328,9 +330,13 @@ $ docker run -it --rm -v /your/directory/input/path/:/input -v /your/directory/o
 #### Parameters
 
 `--dir` string : each directory creates one plot. seperated by ','
+
 `--prefix` string : each prefix draws a line in the plot. seperated by ','
+
 `--grp` string : title for each plot. seperated by ','
+
 `--out` string : output path and name for the figure
+
 `--col` int : number of columns to put in the figure
 
 #### Example

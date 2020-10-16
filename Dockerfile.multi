@@ -3,7 +3,7 @@ FROM ubuntu:18.04
 ENV DEBIAN_FRONTEND=noninteractive
 
 RUN apt-get update
-RUN apt-get install -y autoconf build-essential bzip2 cmake cython git libbz2-dev libncurses5-dev openjdk-8-jdk pkg-config python python2.7 python2.7-dev python-setuptools python-pip python-psutil python-numpy python-pandas python-distribute python-pysam python-scipy software-properties-common wget zlib1g-dev python-tqdm
+RUN apt-get install -y autoconf build-essential bzip2 cmake cython git libbz2-dev libncurses5-dev openjdk-8-jdk pkg-config python python2.7 python2.7-dev python-setuptools python-pip python-psutil python-numpy python-pandas python-distribute python-pysam python-scipy software-properties-common wget zlib1g-dev python-tqdm bc
 RUN apt-get clean -y
 
 RUN pip install bx-python==0.7.3
@@ -37,4 +37,16 @@ RUN bin/test_haplotypes
 WORKDIR /
 RUN cp /opt/hap.py-source/src/python/multi_som.py /opt/hap.py/bin/
 RUN cp /opt/hap.py-source/src/python/draw_roc.py /opt/hap.py/bin/
+RUN cp /opt/hap.py-source/src/python/merge_vcf.py /opt/hap.py/bin/
+
+RUN cp /opt/hap.py-source/src/sh/run_all_cmd.sh /opt/hap.py/bin/
+RUN cp /opt/hap.py-source/src/sh/run_all_file.sh /opt/hap.py/bin/
+RUN cp /opt/hap.py-source/src/sh/run_sr_cmd.sh /opt/hap.py/bin/
+RUN cp /opt/hap.py-source/src/sh/run_sr_file.sh /opt/hap.py/bin/
+
+RUN chmod +x /opt/hap.py/bin/run_all_cmd.sh
+RUN chmod +x /opt/hap.py/bin/run_all_file.sh
+RUN chmod +x /opt/hap.py/bin/run_sr_cmd.sh
+RUN chmod +x /opt/hap.py/bin/run_sr_file.sh
+
 RUN rm -rf /opt/hap.py-source
